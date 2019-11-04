@@ -1,0 +1,781 @@
+<lxs>
+    <scene root="root" axis_length="15.0"/>
+
+    <views default="defaultCamera">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="40" y="15" z="40" />
+            <to x="0" y="-2" z="0" />
+        </perspective>
+        <perspective id="houseCamera" near="0.1" far="500" angle="30">
+            <from x="50" y="10" z="16" />
+            <to x="0" y="2" z="16" />
+        </perspective>
+        <ortho id="snowmanCamera" near="1" far="50" left="-4" right="4" top="2" bottom="-4">
+            <from x="45" y="0" z="22"/>
+            <to x="21" y="4" z="6"/>
+        </ortho>
+    </views>
+
+    <globals>
+        <ambient r="0.5" g="0.5" b="0.5" a="1" />
+        <background r="0.8" g="0.9" b="1" a="1" />
+    </globals>
+
+    <lights>
+        <omni id="day" enabled="1">
+            <location x="25" y="30" z="25" w="1" />
+            <ambient r="0.9" g="0.8" b="0.6" a="1" />
+            <diffuse r="0.9" g="0.8" b="0.6" a="1" />
+            <specular r="0.9" g="0.8" b="0.6" a="1" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <omni id="night" enabled="0">
+            <location x="29" y="29" z="-29" w="1" />
+            <ambient r="0.1" g="0.35" b="0.65" a="0.2" />
+            <diffuse r="0.1" g="0.35" b="0.65" a="0.2" />
+            <specular r="0.1" g="0.35" b="0.65" a="0.2" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <omni id="fire" enabled="0">
+            <location x="25" y="0" z="25" w="1" />
+            <ambient r="0.9" g="0.6" b="0.1" a="1" />
+            <diffuse r="0.9" g="0.6" b="0.1" a="1" />
+            <specular r="0.9" g="0.6" b="0.1" a="1" />
+            <attenuation constant="0" linear="0.3" quadratic="0" />
+        </omni>
+    </lights>
+
+    <textures>
+        <texture id="trunk" file="../scenes/images/birchWood.png" />
+        <texture id="snow" file="../scenes/images/snow.png" />
+        <texture id="leaves" file="../scenes/images/snowleaves.jpg"/>
+        <texture id="housefront" file="../scenes/images/houseFront.png"/>
+        <texture id="houseside" file="../scenes/images/houseSide.png"/>
+        <texture id="houseback" file="../scenes/images/houseBack.png"/>
+        <texture id="stick" file="../scenes/images/bark.jpg"/>
+        <texture id="carrot" file="../scenes/images/carrot.jpg"/>
+        <texture id="roof" file="../scenes/images/roof.jpg"/>
+        <texture id="snowroof" file="../scenes/images/snowroof.jpg" />
+        <texture id="black" file="../scenes/images/black.jpg"/>
+        <texture id="fire" file="../scenes/images/fire.jpg" />
+        <texture id="rock" file="../scenes/images/rock.jpg" />
+    </textures>
+
+    <materials>
+        <material id="none" shininess = "100">
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+            <specular r="0.0" g="0.0" b="0.0" a="1" />
+        </material>
+        <material id="snow" shininess = "100">
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
+        </material>
+        <material id="fire" shininess = "100">
+            <emission r="0.9" g="0.6" b="0.1" a="1" />
+            <ambient r="0.9" g="0.6" b="0.1" a="1" />
+            <diffuse r="0.9" g="0.6" b="0.1" a="1" />
+            <specular r="0.9" g="0.6" b="0.1" a="1" />
+        </material>
+        <material id="tree" shininess = "100">
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
+        </material>
+        <material id="specularMaterial" shininess = "25">
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <specular r="0.9" g="0.9" b="0.9" a="1" />
+        </material>
+        <material id="diffuseMaterial" shininess = "100">
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.9" g="0.9" b="0.9" a="1" />
+            <specular r="0.3" g="0.3" b="0.3" a="1" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="trans1">
+            <translate x="0" y="0" z="0.5" />
+        </transformation>
+        <transformation id="trans2">
+            <translate x="0" y="0" z="-0.5" />
+            <rotate axis="x" angle="180" />
+        </transformation>
+        <transformation id="trans3">
+            <translate x="0" y="0.5" z="0" />
+            <rotate axis="x" angle="-90" />
+        </transformation>
+        <transformation id="trans4">
+            <translate x="0" y="-0.5" z="0" />
+            <rotate axis="x" angle="90" />
+        </transformation>
+        <transformation id="trans5">
+            <translate x="0.5" y="0" z="0" />
+            <rotate axis="y" angle="90" />
+        </transformation>
+        <transformation id="trans6">
+            <translate x="-0.5" y="0" z="0" />
+            <rotate axis="y" angle="-90" />
+        </transformation>
+        <transformation id="stick">
+            <translate x="0" y="1.4" z="0.2" />
+            <rotate axis="x" angle="55"/>
+            <scale x="0.15" y="0.15" z="1.7" />
+        </transformation>
+    </transformations>
+    
+    <primitives>
+        <primitive id="rectangle">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive>
+        <primitive id="torus">
+            <torus inner="0.25" outer="1.2" slices="30" loops="30" />
+        </primitive>
+        <primitive id="cylinder">
+            <cylinder base="1" top="1" height="1" slices="30" stacks="30" />
+        </primitive>
+        <primitive id="cone">
+            <cylinder base="0.5" top="0" height="1" slices="30" stacks="30" />
+        </primitive>
+        <primitive id="sphere">
+            <sphere radius="1" slices="30" stacks="30" />
+        </primitive>
+        <primitive id="triangle">
+            <triangle x1="0.5" y1="0" z1="0" x2="-0.5" y2="0" z2="0" x3="0" y3="1" z3="0" />
+        </primitive>
+    </primitives>
+
+    <components>
+        <component id="root">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="snowman" />
+                <componentref id="house" />
+                <componentref id="tree1" />
+                <componentref id="tree2" />
+                <componentref id="tree3" />
+                <componentref id="tree4" />
+                <componentref id="campfire" />
+                <componentref id="floor" />
+            </children>
+        </component>
+
+        <component id="snowman">
+            <transformation>
+                <translate x="20" y="0" z="5" />
+                <rotate axis="y" angle="-50" />
+                <scale x="1.2" y="1.2" z="1.2" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="snowman_head" />
+                <componentref id="snowman_body" />
+                <componentref id="snowman_base" />
+            </children>
+        </component>
+
+        <component id="snowman_head">
+            <transformation>
+                <translate x="0" y="4.4" z="0" />
+                <scale x = "0.7" y = "0.7" z = "0.7" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="snowball" />
+                <componentref id="snowman_nose" />
+                <componentref id="snowman_eyes" />
+            </children>
+        </component>
+
+        <component id="snowman_eyes">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+            </materials>
+            <texture id="black" length_s="1" length_t="1" />
+            <children>
+                <componentref id="snowman_eye_1" />
+                <componentref id="snowman_eye_2" />
+            </children>
+        </component>
+
+        <component id="snowman_eye_1">
+            <transformation>
+                <translate x="0.8" y="0.4" z="0.4" />
+                <scale x = "0.1" y = "0.1" z = "0.1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="snowman_eye_2">
+            <transformation>
+                <translate x="0.8" y="0.4" z="-0.4" />
+                <scale x = "0.1" y = "0.1" z = "0.1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="snowman_nose">
+            <transformation>
+                <translate x="1" y="0" z="0" />
+                <scale x = "0.6" y = "0.3" z = "0.3" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+            </materials>
+            <texture id="carrot" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cone" />
+            </children>
+        </component>
+
+        <component id="snowman_body">
+            <transformation>
+                <translate x="0" y="3" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="snowball" />
+                <componentref id="snowman_arms" />
+            </children>
+        </component>
+
+        <component id="snowman_arms">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+            </materials>
+            <texture id="stick" length_s="1" length_t="1" />
+            <children>
+                <componentref id="snowman_arm_1" />
+                <componentref id="snowman_arm_2" />
+            </children>
+        </component>
+
+        <component id="snowman_arm_1">
+            <transformation>
+                <translate x="0" y="0.2" z="0.9" />
+                <rotate axis="x" angle="25" />
+                <scale x = "0.1" y = "0.1" z = "1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id= "cylinder" />
+            </children>
+        </component>
+
+        <component id="snowman_arm_2">
+            <transformation>
+                <translate x="0" y="0.2" z="-0.9" />
+                <rotate axis="x" angle="-25" />
+                <scale x = "0.1" y = "0.1" z = "1" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id= "cylinder" />
+            </children>
+        </component>
+
+        <component id="snowman_base">
+            <transformation>
+                <translate x="0" y="1.3" z="0" />
+                <scale x = "1.4" y = "1.3" z = "1.4" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="snowball" />
+            </children>
+        </component>
+
+        <component id="snowball">
+            <transformation>
+                <rotate axis="y" angle="0" />
+            </transformation>
+            <materials>
+                <material id="snow" />
+                <material id="specularMaterial" />
+            </materials>
+            <texture id="snow" length_s="2" length_t="2" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="house">
+            <transformation>
+                <translate x="17" y="3" z="16" />
+                <scale x="6" y="6" z="6" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+                <material id="specularMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="house_right" />
+                <componentref id="house_left" />
+                <componentref id="house_top" />
+                <componentref id="house_bottom" />
+                <componentref id="house_front" />
+                <componentref id="house_back" />
+                <componentref id="roof" />
+            </children>
+        </component>
+
+        <component id="house_right">
+            <transformation>
+                <transformationref id="trans1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="houseside" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+
+        <component id="house_left">
+            <transformation>
+                <transformationref id="trans2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="houseside" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+
+        <component id="house_top">
+            <transformation>
+                <transformationref id="trans3" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="houseback" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+
+        <component id="house_bottom">
+            <transformation>
+                <transformationref id="trans4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="houseback" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+
+        <component id="house_front">
+            <transformation>
+                <transformationref id="trans5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="housefront" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+
+        <component id="house_back">
+            <transformation>
+                <transformationref id="trans6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="houseback" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+
+        <component id="roof">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <scale x="1.3" y="0.6" z="1.3" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+            </materials>
+            <texture id="snowroof" length_s="0.7" length_t="0.7" />
+            <children>
+                <primitiveref id="roof_right" />
+                <primitiveref id="roof_left" />
+                <primitiveref id="roof_front" />
+                <primitiveref id="roof_back" />
+            </children>
+        </component>
+
+        <component id="roof_right">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="x" angle="-30" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="roof_left">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis="x" angle="30" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="roof_front">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="z" angle="30" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="roof_back">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="z" angle="-30" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="tree1">
+            <transformation>
+                <translate x="3" y="0" z="4" />
+                <rotate axis="y" angle="-30"/>
+            </transformation>
+            <materials>
+                <material id="tree" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="trunk" />
+                <componentref id="tree_top" />
+            </children>
+        </component>
+
+        <component id="tree2">
+            <transformation>
+                <translate x="6" y="0" z="12" />
+                <rotate axis="y" angle="45"/>
+            </transformation>
+            <materials>
+                <material id="tree" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="trunk" />
+                <componentref id="tree_top" />
+            </children>
+        </component>
+
+        <component id="tree3">
+            <transformation>
+                <translate x="4" y="0" z="20" />
+                <rotate axis="y" angle="60"/>
+            </transformation>
+            <materials>
+                <material id="tree" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="trunk" />
+                <componentref id="tree_top" />
+            </children>
+        </component>
+
+        <component id="tree4">
+            <transformation>
+                <translate x="10" y="0" z="25" />
+                <rotate axis="y" angle="190"/>
+            </transformation>
+            <materials>
+                <material id="tree" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="trunk" />
+                <componentref id="tree_top" />
+            </children>
+        </component>
+
+        <component id="trunk">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="0.85" y="7" z="0.85" />
+                <rotate axis="x" angle="-90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="trunk" length_s="0.5" length_t="1" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id="tree_top">
+            <transformation>
+                <translate x="0" y="7" z="0" />
+                <scale x="4.5" y="7" z="4.5" />
+                <rotate axis="x" angle="-90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="leaves" length_s="0.5" length_t="0.5" />
+            <children>
+                <primitiveref id="cone" />
+            </children>
+        </component>
+
+        <component id="campfire">
+            <transformation>
+                <translate x="25" y="0" z="25" />
+                <scale x="1.2" y="1.2" z="1.2" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="firewood" />
+                <componentref id="fire" />
+                <componentref id="firerock" />
+            </children>
+        </component>
+
+        <component id = "firewood">
+            <transformation>
+                <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+            </materials>
+            <texture id="stick" length_s="1" length_t="1" />
+            <children>
+                <componentref id="stick1" />
+                <componentref id="stick2" />
+                <componentref id="stick3" />
+                <componentref id="stick4" />
+                <componentref id="stick5" />
+                <componentref id="stick6" />
+            </children>
+        </component>
+
+        <component id = "stick1">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <transformationref id="stick" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id = "stick2">
+            <transformation>
+                <rotate axis="y" angle="60"/>
+                <transformationref id="stick" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id = "stick3">
+            <transformation>
+                <rotate axis="y" angle="120"/>
+                <transformationref id="stick" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id = "stick4">
+            <transformation>
+                <rotate axis="y" angle="180"/> 
+                <transformationref id="stick" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id = "stick5">
+            <transformation>
+                <rotate axis="y" angle="240"/>
+                <transformationref id="stick" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id = "stick6">
+            <transformation>
+                <rotate axis="y" angle="300"/>
+                <transformationref id="stick" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+
+        <component id = "fire">
+            <transformation>
+                <rotate axis="x" angle="-90"/>
+                <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+                <material id="fire" />
+            </materials>
+            <texture id="fire" length_s="0.5" length_t="0.5"/>
+            <children>
+                <primitiveref id="cone" />
+            </children>
+        </component>
+
+        <component id = "firerock">
+            <transformation>
+                <translate x="0" y="0.25" z="0" />
+                <rotate axis="x" angle="-90"/>
+            </transformation>
+            <materials>
+                <material id="diffuseMaterial" />
+            </materials>
+            <texture id="rock" length_s="1" length_t="0.2"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>
+
+        <component id="floor">
+            <transformation>
+                <rotate axis="x" angle="-90"/>
+                <scale x="30" y="30" z="0" />
+                <translate x="0.5" y="-0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="snow" />
+            </materials>
+            <texture id="snow" length_s="0.2" length_t="0.3" />
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+        
+    </components>
+</lxs>
