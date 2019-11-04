@@ -130,6 +130,16 @@
             <scale x="0.15" y="0.15" z="1.7" />
         </transformation>
     </transformations>
+
+    <animations>
+        <animation id="ss">
+            <keyframe instant="ff">
+                <translate x="ff" y="ff" z="ff" />
+                <rotate angle_x="ff" angle_y="ff" angle_z="ff" />
+                <scale x="ff" y="ff" z="ff" />
+            </keyframe>
+        </animation>
+    </animations>
     
     <primitives>
         <primitive id="rectangle">
