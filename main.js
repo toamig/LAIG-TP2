@@ -16,11 +16,14 @@ serialInclude(['../lib/CGF.js',
                 'MySceneGraph.js', 
                 'MyInterface.js', 
                 'MyComponent.js', 
-                'MyRectangle.js', 
-                'MyCylinder.js',
-                'MySphere.js',
-                'MyTriangle.js',
-                'MyTorus.js',
+                'Primitives/MyRectangle.js', 
+                'Primitives/MyCylinder.js',
+                'Primitives/MySphere.js',
+                'Primitives/MyTriangle.js',
+                'Primitives/MyTorus.js',
+                'Animations/Animation.js',
+                'Animations/KeyframeAnimation.js',
+
 
 main=function()
 {

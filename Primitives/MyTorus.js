@@ -45,13 +45,17 @@ class MyTorus extends CGFobject {
 
 				var x = (R + r * cosAngInt) * cosAngExt;
 				var y = (R + r * cosAngInt) * sinAngExt;
-                var z = r * sinAngInt;
+				var z = r * sinAngInt;
+				
+				var normx = (r * cosAngInt) * cosAngExt;
+				var normy = (r * cosAngInt) * sinAngExt;
+                var normz = r * sinAngInt;
                 
 				var s = (i / this.slices);
 				var t = (j / this.loops);
 
 				this.vertices.push(x, y, z);
-				this.normals.push(x, y, z);
+				this.normals.push(normx, normy, normz);
 				this.texCoords.push(s, t);
 			}
 		}

@@ -136,6 +136,15 @@ class XMLscene extends CGFscene {
         
     }
 
+    update(time){
+		this.deltaTime = (time - this.lastTime)/1000 || 0;
+        this.lastTime = time;
+
+        for (var key in this.graph.animations) {
+            this.graph.animations[key].update(this.deltaTime);
+        }
+    }
+
     /**
      * Displays the scene.
      */

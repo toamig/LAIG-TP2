@@ -12,7 +12,8 @@ class MyComponent{
         this.transformations = global[1];
         this.materials = global[2];
         this.texture = global[3];
-        this.children = global[4]; 
+        this.children = global[4];
+        this.animation = global[5];
 
         this.actualMat = this.actualMat || this.graph.materials[this.materials[this.graph.currentMaterial%this.materials.length]]; 
         this.actualTex = this.actualTex || this.graph.textures[this.texture[0]];
@@ -68,6 +69,11 @@ class MyComponent{
         }
 
         this.graph.scene.pushMatrix();
+
+        if(this.animation.length){
+            this.animation[0].apply();
+        }
+
         for(var key in this.transformations){
             this.graph.scene.multMatrix(this.transformations[key]);
         }

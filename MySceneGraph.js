@@ -3,7 +3,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
 // Order of the groups in the XML document.
 var SCENE_INDEX = 0;
 var VIEWS_INDEX = 1;
-var AMBIENT_INDEX = 2;
+var GLOBALS_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
@@ -120,7 +120,7 @@ class MySceneGraph {
         if ((index = nodeNames.indexOf("globals")) == -1)
             return "tag <globals> missing";
         else {
-            if (index != AMBIENT_INDEX)
+            if (index != GLOBALS_INDEX)
                 this.onXMLMinorError("tag <globals> out of order");
 
             //Parse globals block
@@ -179,7 +179,7 @@ class MySceneGraph {
         if ((index = nodeNames.indexOf("animations")) == -1)
             return "tag <animations> missing";
         else {
-            if (index != PRIMITIVES_INDEX)
+            if (index != ANIMATIONS_INDEX)
                 this.onXMLMinorError("tag <animations> out of order");
     
             //Parse primitives block
@@ -771,8 +771,104 @@ class MySceneGraph {
      * Parses the <animations> block.
      * @param {animations block element} animationsNode
      */
-    parseAnimations(primitivesNode) {
-        var children = primitivesNode.children;
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children;
+
+        this.animations = [];
+
+        var grandChildren = [];
+
+        var grandGrandChildren = [];
+
+        // Any number of animations.
+        for (var i = 0; i < children.length; i++) {
+
+            //storing animations information;
+            var global = [];
+
+            var keyframes = [];
+
+            if (children[i].nodeName != "animation") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // Get id of the current animation.
+            var animationId = this.reader.getString(children[i], 'id');
+            if (animationId == null)
+                return "no ID defined for animation";
+
+            // Checks for repeated IDs.
+            if (this.animations[animationId] != null)
+                return "ID must be unique for each animation (conflict: ID = " + animationId + ")";
+
+            global.push(animationId);
+
+            grandChildren = children[i].children;
+
+            // Any number of keyframes.
+            for (var j = 0; j < grandChildren.length; j++) {
+
+                var keyframe = [];
+
+                if (grandChildren[j].nodeName != "keyframe") {
+                    this.onXMLMinorError("unknown tag <" + grandChildren[j].nodeName + ">");
+                    continue;
+                }
+
+                // Get id of the current animation.
+                var keyframeinstant = this.reader.getFloat(grandChildren[j], 'instant');
+                if (keyframeinstant == null)
+                    return "no instant defined for keyframe on animation ID" + animationId;
+
+                keyframe.push(keyframeinstant);
+
+                grandGrandChildren = grandChildren[j].children;
+
+                // Get animation info.
+                for (var k = 0; k < grandGrandChildren.length; k++) {
+
+                    switch (grandGrandChildren[k].nodeName) {
+
+                        case "translate": 
+                            var translateCoords = this.parseCoordinates3D(grandGrandChildren[k], "translate on animation ID " + animationId);
+                            if (!Array.isArray(translateCoords))
+                                return translateCoords;
+                            keyframe.push(translateCoords);
+                            break;
+                        
+                        case "rotate":
+                            var rotateCoords = this.parseCoordinatesRotate(grandGrandChildren[k], "rotate on animation ID " + animationId);
+                            if (!Array.isArray(rotateCoords))
+                                return rotateCoords;
+                            keyframe.push(rotateCoords);
+                            break;
+                        
+                        case "scale":
+                            var scaleCoords = this.parseCoordinates3D(grandGrandChildren[k], "scale on animation ID " + animationId);
+                            if (!Array.isArray(scaleCoords))
+                                return scaleCoords;
+                            keyframe.push(scaleCoords);
+                            break;
+
+                        default:
+                            this.onXMLMinorError("unknown tag <" + grandGrandChildren[k].nodeName + ">");
+                            continue;
+
+                    }
+                    
+                }
+
+                keyframes.push(keyframe);
+                
+            }
+
+            global.push(keyframes);
+            
+            this.animations[animationId] = new KeyframeAnimation(this.scene, global[0], global[1]);
+
+        }
+
     }
 
     /**
@@ -983,7 +1079,7 @@ class MySceneGraph {
         this.components = [];
 
         var grandChildren = [];
-        var grandgrandChildren = [];
+        var grandGrandChildren = [];
         var nodeNames = [];
 
         // Any number of components.
@@ -1016,52 +1112,56 @@ class MySceneGraph {
             }
 
             var transformationIndex = nodeNames.indexOf("transformation");
+            var animationsIndex = nodeNames.indexOf("animationref");
             var materialsIndex = nodeNames.indexOf("materials");
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
-            
+
+            var animations = [];
+
             for(var j = 0; j < grandChildren.length; j++){
 
-                grandgrandChildren = grandChildren[j].children;
+                grandGrandChildren = grandChildren[j].children;
 
                 var transformations = [];
                 var materials = [];
                 var texture = [];
                 var child = [];
+                
 
                 // Transformation
                 if(j == transformationIndex){
 
-                    for(var k = 0; k < grandgrandChildren.length; k++){
+                    for(var k = 0; k < grandGrandChildren.length; k++){
 
                         var transfMatrix = mat4.create();
 
-                        if(grandgrandChildren[k].nodeName == "transformationref"){
-                            var transformationId = this.reader.getString(grandgrandChildren[k], 'id');
+                        if(grandGrandChildren[k].nodeName == "transformationref"){
+                            var transformationId = this.reader.getString(grandGrandChildren[k], 'id');
                             transformations.push(this.transformations[transformationId]);
                         }
-                        else if(grandgrandChildren[k].nodeName == "translate"){
-                            var coordinates = this.parseCoordinates3D(grandgrandChildren[k], "translate transformation for ID " + componentId);
+                        else if(grandGrandChildren[k].nodeName == "translate"){
+                            var coordinates = this.parseCoordinates3D(grandGrandChildren[k], "translate transformation for ID " + componentId);
                             transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
                         }
-                        else if(grandgrandChildren[k].nodeName == "scale"){
-                            var scaleX = this.reader.getFloat(grandgrandChildren[k], 'x');
+                        else if(grandGrandChildren[k].nodeName == "scale"){
+                            var scaleX = this.reader.getFloat(grandGrandChildren[k], 'x');
                             if (!(scaleX != null && !isNaN(scaleX)))
                                 return "unable to parse x scale value for transformation ID = " + componentId;
-                            var scaleY = this.reader.getFloat(grandgrandChildren[k], 'y');
+                            var scaleY = this.reader.getFloat(grandGrandChildren[k], 'y');
                             if (!(scaleY != null && !isNaN(scaleY)))
                                 return "unable to parse y scale value for transformation ID = " + componentId;
-                            var scaleZ = this.reader.getFloat(grandgrandChildren[k], 'z');
+                            var scaleZ = this.reader.getFloat(grandGrandChildren[k], 'z');
                             if (!(scaleZ != null && !isNaN(scaleZ)))
                                 return "unable to parse z scale value for transformation ID = " + componentId;
 
                             transfMatrix = mat4.scale(transfMatrix, transfMatrix, [scaleX, scaleY, scaleZ]);
                         }
-                        else if(grandgrandChildren[k].nodeName == "rotate"){
-                            var axis = this.reader.getString(grandgrandChildren[k], 'axis');
+                        else if(grandGrandChildren[k].nodeName == "rotate"){
+                            var axis = this.reader.getString(grandGrandChildren[k], 'axis');
                             if (!(axis == 'x' || axis == 'y' || axis == 'z'))
                                 return "unable to parse axis of the transformation for ID = " + componentId;
-                            var angle = this.reader.getFloat(grandgrandChildren[k], 'angle');
+                            var angle = this.reader.getFloat(grandGrandChildren[k], 'angle');
                             if (!(angle != null && !isNaN(angle)))
                                 return "unable to parse angle of the transformation for ID = " + componentId;
                         
@@ -1082,15 +1182,26 @@ class MySceneGraph {
                     global.push(transformations);
                 }
 
+                // Animation
+                else if(j == animationsIndex){
+
+                    var animationId = this.reader.getString(grandChildren[j], 'id');
+                    if (animationId == null)
+                        return "no ID defined for animation on component ID = " + componentId;
+
+                    
+                    animations.push(this.animations[animationId]);
+                }
+
                 // Materials
                 else if(j == materialsIndex){
 
-                    for(var k = 0; k < grandgrandChildren.length; k++){
+                    for(var k = 0; k < grandGrandChildren.length; k++){
 
-                        if(grandgrandChildren[k].nodeName == "material"){
-                            var materialId = this.reader.getString(grandgrandChildren[k], 'id');
+                        if(grandGrandChildren[k].nodeName == "material"){
+                            var materialId = this.reader.getString(grandGrandChildren[k], 'id');
                             if (materialId == null)
-                                return "no ID defined for material on ID = " + componentId;
+                                return "no ID defined for material on component ID = " + componentId;
                             materials.push(materialId);
                         }
                     }
@@ -1126,24 +1237,27 @@ class MySceneGraph {
                 // Children
                 else if(j == childrenIndex){
 
-                    for(var k = 0; k < grandgrandChildren.length; k++){
+                    for(var k = 0; k < grandGrandChildren.length; k++){
 
-                        if(grandgrandChildren[k].nodeName == "componentref"){
-                            var compId = this.reader.getString(grandgrandChildren[k], 'id');
+                        if(grandGrandChildren[k].nodeName == "componentref"){
+                            var compId = this.reader.getString(grandGrandChildren[k], 'id');
                             child.push(compId);
                         }
-                        else if(grandgrandChildren[k].nodeName == "primitiveref"){
-                            var primId = this.reader.getString(grandgrandChildren[k], 'id');
+                        else if(grandGrandChildren[k].nodeName == "primitiveref"){
+                            var primId = this.reader.getString(grandGrandChildren[k], 'id');
                             child.push(primId);
                         }
                         else{
-                            this.onXMLMinorError("unknown tag <" + grandgrandChildren[k].nodeName + ">");
+                            this.onXMLMinorError("unknown tag <" + grandGrandChildren[k].nodeName + ">");
                         }
                     }
 
                     global.push(child);
                 }
+
             }
+
+            global.push(animations);
 
             this.components[componentId] = global;
             
@@ -1162,6 +1276,33 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Parse the coordinates from a node with ID = id
+     * @param {block element} node
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseCoordinatesRotate(node, messageError) {
+        var position = [];
+
+        // x
+        var x = this.reader.getFloat(node, 'angle_x');
+        if (!(x != null && !isNaN(x)))
+            return "unable to parse angle_x of the " + messageError;
+
+        // y
+        var y = this.reader.getFloat(node, 'angle_y');
+        if (!(y != null && !isNaN(y)))
+            return "unable to parse angle_y of the " + messageError;
+
+        // z
+        var z = this.reader.getFloat(node, 'angle_z');
+        if (!(z != null && !isNaN(z)))
+            return "unable to parse angle_z of the " + messageError;
+
+        position.push(...[x, y, z]);
+
+        return position;
+    }
 
     /**
      * Parse the coordinates from a node with ID = id

@@ -132,11 +132,16 @@
     </transformations>
 
     <animations>
-        <animation id="ss">
-            <keyframe instant="ff">
-                <translate x="ff" y="ff" z="ff" />
-                <rotate angle_x="ff" angle_y="ff" angle_z="ff" />
-                <scale x="ff" y="ff" z="ff" />
+        <animation id="demoAnimation">
+            <keyframe instant="1.5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="2">
+                <translate x="1" y="1" z="1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="2" y="2" z="2" />
             </keyframe>
         </animation>
     </animations>
@@ -189,6 +194,7 @@
                 <rotate axis="y" angle="-50" />
                 <scale x="1.2" y="1.2" z="1.2" />
             </transformation>
+            <animationref id="demoAnimation" />
             <materials>
                 <material id="none" />
             </materials>
@@ -765,6 +771,7 @@
             </transformation>
             <materials>
                 <material id="diffuseMaterial" />
+                <material id="specularMaterial" />
             </materials>
             <texture id="rock" length_s="1" length_t="0.2"/>
             <children>
