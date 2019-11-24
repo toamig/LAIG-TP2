@@ -15,12 +15,5 @@ class Animation {
     }
 
     apply() {
-        if(this.final) {
-            this.finalMatrix = this.matrixAni;
-            this.scene.multMatrix(this.finalMatrix);
-        }
-        else{
-            this.scene.multMatrix(this.matrixAni);
-        }
     }
 }

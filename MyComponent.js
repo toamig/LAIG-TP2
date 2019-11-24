@@ -68,17 +68,38 @@ class MyComponent{
                 break;
         }
 
-        this.graph.scene.pushMatrix();
+        
 
-        if(this.animation.length){
-            this.animation[0].apply();
+
+        this.graph.scene.pushMatrix(); 
+        
+        if(this.children.length == 1 && this.graph.nodes[this.children[0]].constructor.name != 'MyComponent'){
+
+            if(this.animation.length){
+                this.animation[0].apply();
+            }
+
+            for(var transfkey in this.transformations){
+                this.graph.scene.multMatrix(this.transformations[transfkey]);
+            }
+            
+        }
+        else{
+            
+            for(var transfkey in this.transformations){
+                this.graph.scene.multMatrix(this.transformations[transfkey]);
+            }
+
+            if(this.animation.length){
+                this.animation[0].apply();
+            }
+
         }
 
-        for(var key in this.transformations){
-            this.graph.scene.multMatrix(this.transformations[key]);
-        }
+
         for(var key in this.children) {
             if(this.graph.nodes[this.children[key]].constructor.name == 'MyComponent'){
+
                 switch(this.graph.materials[this.materials[this.graph.currentMaterial%this.materials.length]]){
                     case 'inherit': 
                         this.graph.nodes[this.children[key]].setCurrentMaterial(this.actualMat);
@@ -108,8 +129,10 @@ class MyComponent{
             else{
                 this.graph.nodes[this.children[key]].changeCoords(this.length_s, this.length_t);
             }
+            
             this.graph.nodes[this.children[key]].display();
         }
+
         this.graph.scene.popMatrix();
     }
 
