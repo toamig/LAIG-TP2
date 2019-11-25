@@ -43,6 +43,8 @@ class XMLscene extends CGFscene {
 
         //Variables connected to MyInterface
         this.activeCamera = 'defaultCamera';
+        this.securityCam = 'securityCamera';
+        
         
     }
 
@@ -50,15 +52,22 @@ class XMLscene extends CGFscene {
      * Called by interface to update the camera.
      */
     updateView(){
-        this.camera = this.graph.views[this.activeCamera];
+        this.InterfaceCamera = this.graph.views[this.activeCamera];
+        this.camera = this.InterfaceCamera;
         this.interface.setActiveCamera(this.camera);
+    }
+    /** 
+     * Called by interface to update the security camera.
+     */
+    updateSecurityView(){
+        this.security = this.graph.views[this.securityCam];
     }
     /**
      * Initializes the scene cameras.
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-        this.security = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(15, 30, 15), vec3.fromValues(14, 0, 15));
+        this.security = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(45, 23, 15), vec3.fromValues(13, 3, 15));
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -131,8 +140,9 @@ class XMLscene extends CGFscene {
 
         this.initLights();
 
-        this.interface.addViewController(this.graph.views);
+        this.interface.addViewsGroup(this.graph.views);
         this.updateView();
+        this.updateSecurityView();
 
         this.interface.addLightController(this.graph.lights);
 
@@ -148,6 +158,8 @@ class XMLscene extends CGFscene {
         for (var key in this.graph.animations) {
             this.graph.animations[key].update(this.deltaTime);
         }
+
+		this.rectangle.securityShader.setUniformsValues({ timeFactor: time / 100 % (1000*Math.PI) });
     }
 
     /**
@@ -156,10 +168,13 @@ class XMLscene extends CGFscene {
     display() {
         
         this.RTT.attachToFrameBuffer();
-        this.render(this.security);
+        if(this.sceneInited)
+            this.updateSecurityView();
+            this.render(this.security);
         this.RTT.detachFromFrameBuffer();
 
-        this.render(this.camera);
+        if(this.sceneInited)
+            this.render(this.InterfaceCamera);
 
         this.gl.disable(this.gl.DEPTH_TEST);
         this.rectangle.display();
@@ -173,7 +188,9 @@ class XMLscene extends CGFscene {
      */
     render(currentCamera) {
         // ---- BEGIN Background, camera and axis setup
-        this.interface.setActiveCamera(currentCamera);
+        if(this.sceneInited)
+            this.camera = currentCamera;
+            this.interface.setActiveCamera(currentCamera);
 
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);

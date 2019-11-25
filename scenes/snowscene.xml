@@ -14,6 +14,10 @@
             <from x="45" y="0" z="22"/>
             <to x="21" y="4" z="6"/>
         </ortho>
+        <perspective id="securityCamera" near="0.1" far="500" angle="45">
+            <from x="45" y="13" z="-5" />
+            <to x="13" y="3" z="15" />
+        </perspective>
     </views>
 
     <globals>
@@ -132,50 +136,51 @@
     </transformations>
 
     <animations>
-        <animation id="demoAnimation">
-            <keyframe instant="2">
-                <translate x="10" y="0" z="10" />
+        <animation id="snowmanAnimation">
+            <keyframe instant="4">
+                <translate x="5" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="5">
-                <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
-            </keyframe>
-        </animation>
-        <animation id="translate">
-            <keyframe instant="5">
-                <translate x="1" y="0" z="1" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
-            </keyframe>
-            <keyframe instant="10">
-                <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
-            </keyframe> 
-            <keyframe instant="15">
-                <translate x="0" y="3" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
-            </keyframe>
-        </animation>
-        <animation id="rotate">
-            <keyframe instant="5">
-                <translate x="0" y="0" z="0" />
+            <keyframe instant="6">
+                <translate x="5" y="0" z="0" />
                 <rotate angle_x="0" angle_y="-90" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="10">
+            <keyframe instant="11">
+                <translate x="5" y="0" z="14" />
+                <rotate angle_x="0" angle_y="-90" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="14">
+                <translate x="5" y="0" z="14" />
+                <rotate angle_x="0" angle_y="-90" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.7" />
+            </keyframe>
+            <keyframe instant="16">
+                <translate x="5" y="0" z="14" />
+                <rotate angle_x="0" angle_y="-270" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.7" />
+            </keyframe>
+            <keyframe instant="20">
+                <translate x="5" y="0" z="0" />
+                <rotate angle_x="0" angle_y="-270" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.7" />
+            </keyframe>
+            <keyframe instant="21">
+                <translate x="5" y="0" z="0" />
+                <rotate angle_x="0" angle_y="-180" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.7" />
+            </keyframe>
+            <keyframe instant="25">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="-180" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.7" />
+            </keyframe>
+            <keyframe instant="27">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
-            </keyframe> 
-             <keyframe instant="15">
-                <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="-90" />
-                <scale x="1" y="1" z="1" />
+                <scale x="0.7" y="0.7" z="0.8" />
             </keyframe>
         </animation>
         <animation id="scaleFire">
@@ -214,15 +219,59 @@
                 <rotate angle_x="0" angle_y="-90" angle_z="0" />
                 <scale x="1" y="1.1" z="1" />
             </keyframe>
-            <keyframe instant="23">
+            <keyframe instant="25">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="30">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id="treeAnimation1">
+            <keyframe instant="20">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1.2" y="1.4" z="1.2" />
+            </keyframe>
+        </animation>
+        <animation id="treeAnimation2">
+            <keyframe instant="23">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1.5" y="1.6" z="1.5" />
+            </keyframe>
+        </animation>
+        <animation id="treeAnimation3">
+            <keyframe instant="25">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1.8" y="2" z="1.9" />
+            </keyframe>
+        </animation>
+        <animation id="treeAnimation4">
+            <keyframe instant="17">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1.4" y="1.5" z="1.4" />
             </keyframe>
         </animation>
     </animations>
     
     <primitives>
+        <primitive id="plane">
+            <plane npartsU="10" npartsV="10" />
+        </primitive>
+        <!-- <primitive id="patch">
+            <patch npointsU="2" npointsV="2" npartsU="10" npartsV="10" > 
+                <controlpoint xx="0.5" yy="0.0" zz="-0.5" />
+                <controlpoint xx="0.5" yy="0.0" zz="0.5" />
+                <controlpoint xx="-0.5" yy="0.0" zz="ff" />
+                <controlpoint xx="-0.5" yy="0.0" zz="ff" />
+            </patch>
+        </primitive> -->
         <primitive id="rectangle">
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive>
@@ -231,6 +280,9 @@
         </primitive>
         <primitive id="cylinder">
             <cylinder base="1" top="1" height="1" slices="30" stacks="30" />
+        </primitive>
+        <primitive id="cylinderNurbs">
+            <cylinder2 base="1" top="1" height="1" slices="30" stacks="30" />
         </primitive>
         <primitive id="cone">
             <cylinder base="0.5" top="0" height="1" slices="30" stacks="30" />
@@ -253,7 +305,7 @@
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="test" />
+                <componentref id="teste" />
                 <componentref id="snowman" />
                 <componentref id="house" />
                 <componentref id="tree1" />
@@ -265,27 +317,25 @@
             </children>
         </component>
 
-        <component id="test">
+        <component id="teste">
             <transformation>
                 <translate x="0" y="0" z="0" />
-                <scale x="1" y="1" z="1" />
             </transformation>
-            <animationref id="demoAnimation" />
             <materials>
                 <material id="none" />
             </materials>
             <texture id="none" />
             <children>
-                <primitiveref id="torus" />
+                <primitiveref id="plane" />
             </children>
         </component>
 
         <component id="snowman">
             <transformation>
                 <translate x="20" y="0" z="5" />
-                <rotate axis="y" angle="-50" />
                 <scale x="1.2" y="1.2" z="1.2" />
             </transformation>
+            <animationref id="snowmanAnimation"/>
             <materials>
                 <material id="none" />
             </materials>
@@ -447,7 +497,6 @@
             <transformation>
                 <rotate axis="y" angle="0" />
             </transformation>
-            <animationref id="scaleFire" />
             <materials>
                 <material id="snow" />
                 <material id="specularMaterial" />
@@ -635,9 +684,10 @@
 
         <component id="tree1">
             <transformation>
-                <translate x="3" y="0" z="4" />
+                <translate x="4" y="0" z="4" />
                 <rotate axis="y" angle="-30"/>
             </transformation>
+            <animationref id="treeAnimation1" />
             <materials>
                 <material id="tree" />
             </materials>
@@ -650,9 +700,10 @@
 
         <component id="tree2">
             <transformation>
-                <translate x="6" y="0" z="12" />
+                <translate x="6" y="0" z="13" />
                 <rotate axis="y" angle="45"/>
             </transformation>
+            <animationref id="treeAnimation2" />
             <materials>
                 <material id="tree" />
             </materials>
@@ -665,9 +716,10 @@
 
         <component id="tree3">
             <transformation>
-                <translate x="4" y="0" z="20" />
+                <translate x="4" y="0" z="21" />
                 <rotate axis="y" angle="60"/>
             </transformation>
+            <animationref id="treeAnimation3" />
             <materials>
                 <material id="tree" />
             </materials>
@@ -680,9 +732,10 @@
 
         <component id="tree4">
             <transformation>
-                <translate x="10" y="0" z="25" />
+                <translate x="10" y="0" z="26" />
                 <rotate axis="y" angle="190"/>
             </transformation>
+            <animationref id="treeAnimation4" />
             <materials>
                 <material id="tree" />
             </materials>
@@ -728,7 +781,6 @@
                 <translate x="25" y="0" z="25" />
                 <scale x="1.2" y="1.2" z="1.2" />
             </transformation>
-            <animationref id="scaleFire" />
             <materials>
                 <material id="none" />
             </materials>
@@ -865,7 +917,6 @@
             </transformation>
             <materials>
                 <material id="diffuseMaterial" />
-                <material id="specularMaterial" />
             </materials>
             <texture id="rock" length_s="1" length_t="0.2"/>
             <children>
@@ -875,16 +926,15 @@
 
         <component id="floor">
             <transformation>
-                <rotate axis="x" angle="-90"/>
-                <scale x="30" y="30" z="0" />
-                <translate x="0.5" y="-0.5" z="-0.5" />
+                <scale x="30" y="1" z="30" />
+                <translate x="0.5" y="0" z="0.5" />
             </transformation>
             <materials>
                 <material id="snow" />
             </materials>
-            <texture id="snow" length_s="0.2" length_t="0.3" />
+            <texture id="snow" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="rectangle" />
+                <primitiveref id="plane" />
             </children>
         </component>
         

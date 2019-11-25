@@ -72,7 +72,7 @@ class MyComponent{
 
 
         this.graph.scene.pushMatrix(); 
-        
+
         if(this.children.length == 1 && this.graph.nodes[this.children[0]].constructor.name != 'MyComponent'){
 
             if(this.animation.length){

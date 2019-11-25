@@ -28,15 +28,16 @@ class MyInterface extends CGFinterface {
         return true;
     }
 
-    /**
-     * initKeys
-     */
+    addViewsGroup(views){
+        var viewsGroup = this.gui.addFolder('Views');
+        viewsGroup.open();
 
-
-    addViewController(views){
- 
         var viewIds = Object.keys(views);
-        this.gui.add(this.scene, 'activeCamera', viewIds).name('Camera').onChange(this.scene.updateView.bind(this.scene));
+        viewsGroup.add(this.scene, 'activeCamera', viewIds).name('Camera').onChange(this.scene.updateView.bind(this.scene));
+
+        var viewIds = Object.keys(views);
+        viewsGroup.add(this.scene, 'securityCam', viewIds).name('Security Camera').onChange(this.scene.updateView.bind(this.scene));
+        
     }
 
     addLightController(lights){
