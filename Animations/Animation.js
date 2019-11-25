@@ -15,5 +15,6 @@ class Animation {
     }
 
     apply() {
+        
     }
 }

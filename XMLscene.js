@@ -14,6 +14,7 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         this.lightsOn = [];
         this.keyToLight = [];
+        
     }
 
     /**
@@ -35,7 +36,10 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.setUpdatePeriod(100);
+        this.setUpdatePeriod(50);
+
+        this.RTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
+        this.rectangle = new MySecurityCamera(this);
 
         //Variables connected to MyInterface
         this.activeCamera = 'defaultCamera';
@@ -47,13 +51,14 @@ class XMLscene extends CGFscene {
      */
     updateView(){
         this.camera = this.graph.views[this.activeCamera];
-        this.interface.setActiveCamera(this.camera)
+        this.interface.setActiveCamera(this.camera);
     }
     /**
      * Initializes the scene cameras.
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.security = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(15, 30, 15), vec3.fromValues(14, 0, 15));
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -146,10 +151,29 @@ class XMLscene extends CGFscene {
     }
 
     /**
-     * Displays the scene.
+     * Displays rendered scene.
      */
     display() {
+        
+        this.RTT.attachToFrameBuffer();
+        this.render(this.security);
+        this.RTT.detachFromFrameBuffer();
+
+        this.render(this.camera);
+
+        this.gl.disable(this.gl.DEPTH_TEST);
+        this.rectangle.display();
+        this.gl.enable(this.gl.DEPTH_TEST);   
+        
+        
+    }
+
+    /**
+     * Renders the scene.
+     */
+    render(currentCamera) {
         // ---- BEGIN Background, camera and axis setup
+        this.interface.setActiveCamera(currentCamera);
 
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);

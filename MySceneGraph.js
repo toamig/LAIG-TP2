@@ -369,6 +369,8 @@ class MySceneGraph {
             numViews++;
         }
 
+        console.log(this.views);
+
         if (numViews == 0)
             return "at least one view must be defined";
 
