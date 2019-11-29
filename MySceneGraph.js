@@ -915,6 +915,8 @@ class MySceneGraph {
 
             // Retrieves the primitive coordinates.
             if (primitiveType == 'rectangle') {
+
+                
                 // x1
                 var x1 = this.reader.getFloat(grandChildren[0], 'x1');
                 if (!(x1 != null && !isNaN(x1)))
@@ -1186,7 +1188,7 @@ class MySceneGraph {
                 var cpV = [];
                 let counter = 0;
 
-                for(var i = 0; i < npointsU; i++)
+                for(var k = 0; k < npointsU; k++)
                 {
                     cpV = [];
                     for(var j = 0; j < npointsV; j++)
@@ -1407,8 +1409,6 @@ class MySceneGraph {
         for(var key in this.primitives){
             this.nodes[key] = this.primitives[key];
         }
-
-        console.log(this.nodes);
 
         this.log("Parsed components");
         window.components = this.components;

@@ -183,6 +183,7 @@
                 <scale x="0.7" y="0.7" z="0.8" />
             </keyframe>
         </animation>
+
         <animation id="scaleFire">
             <keyframe instant="5">
                 <translate x="0" y="0" z="0" />
@@ -230,6 +231,7 @@
                 <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
+
         <animation id="treeAnimation1">
             <keyframe instant="20">
                 <translate x="0" y="0" z="0" />
@@ -237,6 +239,7 @@
                 <scale x="1.2" y="1.4" z="1.2" />
             </keyframe>
         </animation>
+
         <animation id="treeAnimation2">
             <keyframe instant="23">
                 <translate x="0" y="0" z="0" />
@@ -244,6 +247,7 @@
                 <scale x="1.5" y="1.6" z="1.5" />
             </keyframe>
         </animation>
+
         <animation id="treeAnimation3">
             <keyframe instant="25">
                 <translate x="0" y="0" z="0" />
@@ -251,6 +255,7 @@
                 <scale x="1.8" y="2" z="1.9" />
             </keyframe>
         </animation>
+
         <animation id="treeAnimation4">
             <keyframe instant="17">
                 <translate x="0" y="0" z="0" />
@@ -264,14 +269,6 @@
         <primitive id="plane">
             <plane npartsU="10" npartsV="10" />
         </primitive>
-        <!-- <primitive id="patch">
-            <patch npointsU="2" npointsV="2" npartsU="10" npartsV="10" > 
-                <controlpoint xx="0.5" yy="0.0" zz="-0.5" />
-                <controlpoint xx="0.5" yy="0.0" zz="0.5" />
-                <controlpoint xx="-0.5" yy="0.0" zz="ff" />
-                <controlpoint xx="-0.5" yy="0.0" zz="ff" />
-            </patch>
-        </primitive> -->
         <primitive id="rectangle">
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive>
@@ -293,6 +290,14 @@
         <primitive id="triangle">
             <triangle x1="0.5" y1="0" z1="0" x2="-0.5" y2="0" z2="0" x3="0" y3="1" z3="0" />
         </primitive>
+        <primitive id="patch">
+            <patch npointsU="2" npointsV="2" npartsU="10" npartsV="10" > 
+                <controlpoint xx="0.5" yy="0.0" zz="-0.5" />
+                <controlpoint xx="0.5" yy="0.0" zz="0.5" />
+                <controlpoint xx="-0.5" yy="0.0" zz="-0.5" />
+                <controlpoint xx="-0.5" yy="0.0" zz="0.5" />
+            </patch>
+        </primitive>
     </primitives>
 
     <components>
@@ -305,7 +310,6 @@
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="teste" />
                 <componentref id="snowman" />
                 <componentref id="house" />
                 <componentref id="tree1" />
@@ -314,19 +318,6 @@
                 <componentref id="tree4" />
                 <componentref id="campfire" />
                 <componentref id="floor" />
-            </children>
-        </component>
-
-        <component id="teste">
-            <transformation>
-                <translate x="0" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="none" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="plane" />
             </children>
         </component>
 

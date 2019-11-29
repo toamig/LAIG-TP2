@@ -73,7 +73,9 @@ class MyComponent{
 
         this.graph.scene.pushMatrix(); 
 
-        if(this.children.length == 1 && this.graph.nodes[this.children[0]].constructor.name != 'MyComponent'){
+        console.log(this.id);
+        console.log(this.graph.nodes[this.children[0]]);
+        if(this.graph.nodes[this.children[0]].constructor.name != 'MyComponent'){
 
             if(this.animation.length){
                 this.animation[0].apply();
@@ -94,7 +96,7 @@ class MyComponent{
                 this.animation[0].apply();
             }
 
-        }
+        }                
 
 
         for(var key in this.children) {
